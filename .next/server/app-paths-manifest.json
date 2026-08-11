@@ -1,0 +1,6 @@
+{
+  "/methodology/page": "app/methodology/page.js",
+  "/evaluation/page": "app/evaluation/page.js",
+  "/page": "app/page.js",
+  "/limitations/page": "app/limitations/page.js"
+}
