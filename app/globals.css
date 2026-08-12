@@ -32,10 +32,7 @@
     --app-primary: #a5b4fc;
   }
 
-  html,
-  body {
-    min-height: 100%;
-  }
+  html, body { min-height: 100%; }
 
   body {
     background-color: var(--app-bg);
@@ -44,182 +41,94 @@
     transition: background-color 0.3s ease, color 0.3s ease;
   }
 
-  /* Keep Tailwind's fixed light design tokens readable in dark mode. */
+  /* Fixed dark utility classes used by older Stitch screens are remapped in light mode. */
+  .theme-light .bg-slate-950,
+  .theme-light .bg-slate-950\/60,
+  .theme-light .bg-slate-950\/50,
+  .theme-light .bg-slate-950\/40 { background-color: #ffffff !important; }
+  .theme-light .bg-slate-900,
+  .theme-light .bg-slate-900\/80,
+  .theme-light .bg-slate-900\/60 { background-color: #ffffff !important; }
+  .theme-light .bg-slate-800,
+  .theme-light .bg-slate-800\/60,
+  .theme-light .bg-slate-800\/50 { background-color: #f2f4f6 !important; }
+  .theme-light .bg-slate-700 { background-color: #e0e3e5 !important; }
+  .theme-light .text-slate-100 { color: #191c1e !important; }
+  .theme-light .text-slate-200 { color: #30343a !important; }
+  .theme-light .text-slate-300 { color: #44474e !important; }
+  .theme-light .text-slate-400 { color: #555961 !important; }
+  .theme-light .text-slate-500 { color: #62656c !important; }
+  .theme-light .text-slate-600 { color: #44474e !important; }
+  .theme-light .text-slate-700 { color: #30343a !important; }
+  .theme-light .border-slate-800,
+  .theme-light .border-slate-700 { border-color: #c5c6cf !important; }
+  .theme-light .placeholder-slate-500,
+  .theme-light .placeholder-slate-600::placeholder { color: #75777f !important; }
+
+  /* Stitch design tokens also appear in screens that do not receive explicit theme props. */
   html.dark .bg-surface,
   html.dark .bg-surface-bright,
-  html.dark .bg-surface-container-lowest,
+  html.dark .bg-surface-container-lowest { background-color: var(--app-surface) !important; }
   html.dark .bg-surface-container-low,
   html.dark .bg-surface-container,
   html.dark .bg-surface-container-high,
-  html.dark .bg-surface-container-highest {
-    background-color: var(--app-surface) !important;
-  }
-
-  html.dark .bg-surface-container-low,
-  html.dark .bg-surface-container,
-  html.dark .bg-surface-container-high,
-  html.dark .bg-surface-container-highest {
-    background-color: var(--app-surface-low) !important;
-  }
-
+  html.dark .bg-surface-container-highest { background-color: var(--app-surface-low) !important; }
   html.dark .text-primary,
   html.dark .text-on-surface,
-  html.dark .text-on-background {
-    color: var(--app-text) !important;
-  }
-
+  html.dark .text-on-background { color: var(--app-text) !important; }
   html.dark .text-on-surface-variant,
   html.dark .text-outline,
-  html.dark .text-on-primary-container {
-    color: var(--app-muted) !important;
-  }
-
-  html.dark .text-outline-variant {
-    color: var(--app-subtle) !important;
-  }
-
+  html.dark .text-on-primary-container { color: var(--app-muted) !important; }
+  html.dark .text-outline-variant { color: var(--app-subtle) !important; }
   html.dark .border-outline-variant,
-  html.dark .border-surface-container-highest {
-    border-color: var(--app-border) !important;
-  }
-
+  html.dark .border-surface-container-highest { border-color: var(--app-border) !important; }
   html.dark .text-on-primary-fixed,
   html.dark .text-on-secondary-fixed,
-  html.dark .text-on-tertiary-fixed {
-    color: #0f172a !important;
-  }
-
-  html.dark .bg-primary-container {
-    background-color: #1e293b !important;
-  }
+  html.dark .text-on-tertiary-fixed { color: #0f172a !important; }
+  html.dark .bg-primary-container { background-color: #1e293b !important; }
 
   html.dark .signal-yellow,
   html.dark .signal-orange,
   html.dark .signal-red,
-  html.dark .signal-none {
-    color: #f8fafc;
-  }
+  html.dark .signal-none { color: #f8fafc; }
+  html.dark .signal-active { outline-color: #a5b4fc; }
 
-  html.dark .signal-active {
-    outline-color: #a5b4fc;
-  }
-
-  /* Form controls inherit the active theme instead of browser defaults. */
-  input,
-  textarea,
-  select,
-  button {
+  input, textarea, select, button {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
   }
 
-  .text-display-lg {
-    font-size: 48px;
-    line-height: 56px;
-    letter-spacing: -0.02em;
-    font-weight: 700;
-  }
-  .text-headline-lg {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -0.01em;
-    font-weight: 600;
-  }
-  .text-headline-lg-mobile {
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 600;
-  }
-  .text-reading-body {
-    font-size: 18px;
-    line-height: 32px;
-    font-weight: 400;
-  }
-  .text-ui-body {
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
-  }
-  .text-label-caps {
-    font-size: 12px;
-    line-height: 16px;
-    letter-spacing: 0.05em;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  .text-data-mono {
-    font-size: 14px;
-    line-height: 20px;
-    font-weight: 400;
-  }
+  .text-display-lg { font-size: 48px; line-height: 56px; letter-spacing: -0.02em; font-weight: 700; }
+  .text-headline-lg { font-size: 32px; line-height: 40px; letter-spacing: -0.01em; font-weight: 600; }
+  .text-headline-lg-mobile { font-size: 24px; line-height: 32px; font-weight: 600; }
+  .text-reading-body { font-size: 18px; line-height: 32px; font-weight: 400; }
+  .text-ui-body { font-size: 16px; line-height: 24px; font-weight: 400; }
+  .text-label-caps { font-size: 12px; line-height: 16px; letter-spacing: 0.05em; font-weight: 700; text-transform: uppercase; }
+  .text-data-mono { font-size: 14px; line-height: 20px; font-weight: 400; }
 }
 
 @layer utilities {
-  .signal-yellow {
-    background-color: rgba(249, 226, 135, 0.35);
-    border-bottom: 2px solid #dcc66e;
-    color: #191c1e;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+  .signal-yellow { background-color: rgba(249, 226, 135, 0.35); border-bottom: 2px solid #dcc66e; color: #191c1e; cursor: pointer; transition: all 0.2s ease; }
   .signal-yellow:hover { background-color: rgba(249, 226, 135, 0.6); }
-
-  .signal-orange {
-    background-color: rgba(255, 220, 197, 0.45);
-    border-bottom: 2px solid #ffb783;
-    color: #191c1e;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+  .signal-orange { background-color: rgba(255, 220, 197, 0.45); border-bottom: 2px solid #ffb783; color: #191c1e; cursor: pointer; transition: all 0.2s ease; }
   .signal-orange:hover { background-color: rgba(255, 220, 197, 0.7); }
-
-  .signal-red {
-    background-color: rgba(255, 218, 214, 0.55);
-    border-bottom: 2px solid #ba1a1a;
-    color: #191c1e;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+  .signal-red { background-color: rgba(255, 218, 214, 0.55); border-bottom: 2px solid #ba1a1a; color: #191c1e; cursor: pointer; transition: all 0.2s ease; }
   .signal-red:hover { background-color: rgba(255, 218, 214, 0.8); }
-
-  .signal-none {
-    color: #191c1e;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
+  .signal-none { color: #191c1e; cursor: pointer; transition: all 0.2s ease; }
   .signal-none:hover { background-color: rgba(216, 226, 255, 0.25); }
-
-  .signal-active {
-    outline: 2px solid #031635;
-    outline-offset: 1px;
-    background-color: rgba(216, 226, 255, 0.75) !important;
-    font-weight: 500;
-  }
+  .signal-active { outline: 2px solid #031635; outline-offset: 1px; background-color: rgba(216, 226, 255, 0.75) !important; font-weight: 500; }
 }
 
-*:focus-visible {
-  outline: 2px solid #031635;
-  outline-offset: 2px;
-}
-
-html.dark *:focus-visible {
-  outline-color: #a5b4fc;
-}
+*:focus-visible { outline: 2px solid #031635; outline-offset: 2px; }
+html.dark *:focus-visible { outline-color: #a5b4fc; }
 
 textarea::-webkit-scrollbar,
-.overflow-y-auto::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
+.overflow-y-auto::-webkit-scrollbar { width: 6px; height: 6px; }
 textarea::-webkit-scrollbar-track,
 .overflow-y-auto::-webkit-scrollbar-track { background: transparent; }
 textarea::-webkit-scrollbar-thumb,
-.overflow-y-auto::-webkit-scrollbar-thumb {
-  background: #c5c6cf;
-  border-radius: 4px;
-}
+.overflow-y-auto::-webkit-scrollbar-thumb { background: #c5c6cf; border-radius: 4px; }
 textarea::-webkit-scrollbar-thumb:hover,
 .overflow-y-auto::-webkit-scrollbar-thumb:hover { background: #75777f; }
-
 html.dark textarea::-webkit-scrollbar-thumb,
 html.dark .overflow-y-auto::-webkit-scrollbar-thumb { background: #475569; }
 html.dark textarea::-webkit-scrollbar-thumb:hover,
