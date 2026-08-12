@@ -66,7 +66,7 @@ export async function analyzeEssay(rawText: string): Promise<AnalysisResult> {
   const sentenceLengths = sentencesRaw.map(s => s.split(/\s+/).length);
   const avgLen = sentenceLengths.reduce((a, b) => a + b, 0) / Math.max(1, sentenceCount);
 
-  const sentences: SentenceAnalysis[] = sentencesRaw.map((text, idx) => {
+const analyzedSentences: SentenceAnalysis[] = sentencesRaw.map((text, idx) => {
     const lower = text.toLowerCase();
     const len = text.split(/\s+/).length;
     let score = 0.1; // baseline
@@ -149,6 +149,7 @@ export async function analyzeEssay(rawText: string): Promise<AnalysisResult> {
     return {
       id: `s${idx}`,
       index: idx,
+      paragraphIndex: 0,
       text,
       flagLevel,
       signalScore: score,
@@ -197,7 +198,7 @@ export async function analyzeEssay(rawText: string): Promise<AnalysisResult> {
       : reviewPriority === 'MODERATE'
       ? 'Localized pattern signals detected in specific sentences.'
       : 'Overall document displays high natural burstiness and perplexity variation.',
-    sentences,
+    sentences: analyzedSentences,
   };
 }
 

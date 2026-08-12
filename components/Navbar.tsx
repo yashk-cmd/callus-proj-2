@@ -1,101 +1,95 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Sun, Moon } from 'lucide-react';
 
-export function Navbar() {
-  const pathname = usePathname();
+interface NavbarProps {
+  activeTab?: string;
+  setActiveTab?: (tab: string) => void;
+  theme?: 'dark' | 'light';
+  setTheme?: (theme: 'dark' | 'light') => void;
+}
 
-  const isActive = (path: string) => {
-    if (path === "/" || path === "/analyzer") {
-      return pathname === "/" || pathname === "/analyzer";
+export const Navbar: React.FC<NavbarProps> = ({
+  activeTab = 'analyzer',
+  setActiveTab,
+  theme = 'dark',
+  setTheme
+}) => {
+  const tabs = [
+    { id: 'analyzer', label: 'Analyzer' },
+    { id: 'dataset', label: 'Dataset' },
+    { id: 'evaluation', label: 'Evaluation' },
+    { id: 'methodology', label: 'Methodology' },
+    { id: 'limitations', label: 'Limitations' },
+  ];
+
+  const toggleTheme = () => {
+    if (setTheme) {
+      setTheme(theme === 'dark' ? 'light' : 'dark');
     }
-    return pathname.startsWith(path);
   };
 
   return (
-    <header className="bg-surface border-b border-outline-variant docked full-width top-0 flat no shadows sticky z-50">
-      <div className="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 max-w-container-max mx-auto">
-        {/* Brand Logo */}
-        <Link href="/" className="flex items-center gap-2 group cursor-pointer">
-          <span className="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg font-bold text-primary tracking-tight">
+    <header className={`border-b sticky top-0 z-50 backdrop-blur-md transition-colors duration-300 ${theme === 'dark' ? 'border-slate-800 bg-slate-900/80 text-slate-100' : 'border-slate-200 bg-white/80 text-slate-900'
+      }`}>
+      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center space-x-2"
+        >
+          <span className="font-bold text-xl tracking-tight bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
             VeritasAI
           </span>
-          <span className="hidden sm:inline-block font-label-caps text-[10px] uppercase tracking-widest text-on-surface-variant bg-surface-container px-2 py-0.5 rounded border border-outline-variant">
-            Admissions Research
-          </span>
-        </Link>
+        </motion.div>
 
-        {/* Navigation Links (Desktop) */}
-        <nav className="hidden md:flex items-center gap-6 h-full font-ui-body text-ui-body">
-          <Link
-            href="/"
-            className={`h-full flex items-center px-2 border-b-2 transition-colors duration-200 ${
-              isActive("/")
-                ? "text-primary border-primary font-bold"
-                : "text-on-surface-variant border-transparent hover:text-primary"
-            }`}
-          >
-            Analyzer
-          </Link>
-          <Link
-            href="/methodology"
-            className={`h-full flex items-center px-2 border-b-2 transition-colors duration-200 ${
-              isActive("/methodology")
-                ? "text-primary border-primary font-bold"
-                : "text-on-surface-variant border-transparent hover:text-primary"
-            }`}
-          >
-            Methodology
-          </Link>
-          <Link
-            href="/dataset"
-            className={`h-full flex items-center px-2 border-b-2 transition-colors duration-200 ${
-              isActive("/dataset")
-                ? "text-primary border-primary font-bold"
-                : "text-on-surface-variant border-transparent hover:text-primary"
-            }`}
-          >
-            Dataset
-          </Link>
-          <Link
-            href="/evaluation"
-            className={`h-full flex items-center px-2 border-b-2 transition-colors duration-200 ${
-              isActive("/evaluation")
-                ? "text-primary border-primary font-bold"
-                : "text-on-surface-variant border-transparent hover:text-primary"
-            }`}
-          >
-            Evaluation
-          </Link>
-          <Link
-            href="/limitations"
-            className={`h-full flex items-center px-2 border-b-2 transition-colors duration-200 ${
-              isActive("/limitations")
-                ? "text-primary border-primary font-bold"
-                : "text-on-surface-variant border-transparent hover:text-primary"
-            }`}
-          >
-            Limitations
-          </Link>
+        {/* Navigation Tabs with Framer Motion Animation */}
+        <nav className="flex items-center space-x-1 sm:space-x-2">
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab?.(tab.id)}
+                className={`relative px-3.5 py-1.5 rounded-lg text-sm font-medium transition-colors ${isActive
+                  ? 'text-white'
+                  : theme === 'dark' ? 'text-slate-400 hover:text-slate-200' : 'text-slate-600 hover:text-slate-900'
+                  }`}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="activeNavbarTab"
+                    className="absolute inset-0 bg-indigo-600 rounded-lg shadow-md shadow-indigo-600/30"
+                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10">{tab.label}</span>
+              </button>
+            );
+          })}
+
+          {/* Theme Toggle Button */}
+          {setTheme && (
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={toggleTheme}
+              className={`ml-4 p-2 rounded-xl border transition-colors ${theme === 'dark'
+                ? 'border-slate-700 bg-slate-800/60 text-amber-400 hover:bg-slate-700'
+                : 'border-slate-200 bg-slate-100 text-indigo-600 hover:bg-slate-200'
+                }`}
+              title="Toggle Theme"
+            >
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </motion.button>
+          )}
         </nav>
-
-        {/* Header Actions */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="/evaluation"
-            className="hidden sm:block font-ui-body text-ui-body text-on-surface-variant hover:text-primary transition-colors cursor-pointer px-3 py-1.5"
-          >
-            Research Charter
-          </Link>
-          <Link
-            href="/"
-            className="bg-primary-container text-on-primary rounded px-5 py-2 font-label-caps text-label-caps hover:bg-opacity-90 transition-all cursor-pointer active:scale-95 shadow-sm"
-          >
-            Analyze Essay
-          </Link>
-        </div>
       </div>
     </header>
   );
-}
+};
+
+export default Navbar;
