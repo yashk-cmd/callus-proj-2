@@ -6,13 +6,112 @@
 @tailwind utilities;
 
 @layer base {
-  body {
-    background-color: #f7f9fb;
-    color: #191c1e;
-    font-family: 'Hanken Grotesk', sans-serif;
+  :root {
+    color-scheme: light;
+    --app-bg: #f7f9fb;
+    --app-text: #191c1e;
+    --app-muted: #44474e;
+    --app-subtle: #75777f;
+    --app-surface: #ffffff;
+    --app-surface-low: #f2f4f6;
+    --app-surface-high: #e0e3e5;
+    --app-border: #c5c6cf;
+    --app-primary: #031635;
   }
 
-  /* Stitch custom font-size utilities not covered by Tailwind config */
+  html.dark {
+    color-scheme: dark;
+    --app-bg: #020617;
+    --app-text: #f1f5f9;
+    --app-muted: #cbd5e1;
+    --app-subtle: #94a3b8;
+    --app-surface: #0f172a;
+    --app-surface-low: #172033;
+    --app-surface-high: #334155;
+    --app-border: #334155;
+    --app-primary: #a5b4fc;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--app-bg);
+    color: var(--app-text);
+    font-family: 'Hanken Grotesk', sans-serif;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Keep Tailwind's fixed light design tokens readable in dark mode. */
+  html.dark .bg-surface,
+  html.dark .bg-surface-bright,
+  html.dark .bg-surface-container-lowest,
+  html.dark .bg-surface-container-low,
+  html.dark .bg-surface-container,
+  html.dark .bg-surface-container-high,
+  html.dark .bg-surface-container-highest {
+    background-color: var(--app-surface) !important;
+  }
+
+  html.dark .bg-surface-container-low,
+  html.dark .bg-surface-container,
+  html.dark .bg-surface-container-high,
+  html.dark .bg-surface-container-highest {
+    background-color: var(--app-surface-low) !important;
+  }
+
+  html.dark .text-primary,
+  html.dark .text-on-surface,
+  html.dark .text-on-background {
+    color: var(--app-text) !important;
+  }
+
+  html.dark .text-on-surface-variant,
+  html.dark .text-outline,
+  html.dark .text-on-primary-container {
+    color: var(--app-muted) !important;
+  }
+
+  html.dark .text-outline-variant {
+    color: var(--app-subtle) !important;
+  }
+
+  html.dark .border-outline-variant,
+  html.dark .border-surface-container-highest {
+    border-color: var(--app-border) !important;
+  }
+
+  html.dark .text-on-primary-fixed,
+  html.dark .text-on-secondary-fixed,
+  html.dark .text-on-tertiary-fixed {
+    color: #0f172a !important;
+  }
+
+  html.dark .bg-primary-container {
+    background-color: #1e293b !important;
+  }
+
+  html.dark .signal-yellow,
+  html.dark .signal-orange,
+  html.dark .signal-red,
+  html.dark .signal-none {
+    color: #f8fafc;
+  }
+
+  html.dark .signal-active {
+    outline-color: #a5b4fc;
+  }
+
+  /* Form controls inherit the active theme instead of browser defaults. */
+  input,
+  textarea,
+  select,
+  button {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
   .text-display-lg {
     font-size: 48px;
     line-height: 56px;
@@ -55,7 +154,6 @@
 }
 
 @layer utilities {
-  /* Signal highlight classes matching Stitch design */
   .signal-yellow {
     background-color: rgba(249, 226, 135, 0.35);
     border-bottom: 2px solid #dcc66e;
@@ -63,9 +161,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .signal-yellow:hover {
-    background-color: rgba(249, 226, 135, 0.6);
-  }
+  .signal-yellow:hover { background-color: rgba(249, 226, 135, 0.6); }
 
   .signal-orange {
     background-color: rgba(255, 220, 197, 0.45);
@@ -74,9 +170,7 @@
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .signal-orange:hover {
-    background-color: rgba(255, 220, 197, 0.7);
-  }
+  .signal-orange:hover { background-color: rgba(255, 220, 197, 0.7); }
 
   .signal-red {
     background-color: rgba(255, 218, 214, 0.55);
@@ -85,18 +179,14 @@
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .signal-red:hover {
-    background-color: rgba(255, 218, 214, 0.8);
-  }
+  .signal-red:hover { background-color: rgba(255, 218, 214, 0.8); }
 
   .signal-none {
     color: #191c1e;
     cursor: pointer;
     transition: all 0.2s ease;
   }
-  .signal-none:hover {
-    background-color: rgba(216, 226, 255, 0.25);
-  }
+  .signal-none:hover { background-color: rgba(216, 226, 255, 0.25); }
 
   .signal-active {
     outline: 2px solid #031635;
@@ -106,38 +196,31 @@
   }
 }
 
-/* Focus ring for accessibility */
 *:focus-visible {
   outline: 2px solid #031635;
   outline-offset: 2px;
 }
 
-/* Custom scrollbars for essay editor & evidence panel */
-textarea::-webkit-scrollbar {
+html.dark *:focus-visible {
+  outline-color: #a5b4fc;
+}
+
+textarea::-webkit-scrollbar,
+.overflow-y-auto::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
-textarea::-webkit-scrollbar-track {
-  background: #f7f9fb;
-}
-textarea::-webkit-scrollbar-thumb {
-  background: #e0e3e5;
-  border-radius: 4px;
-}
-textarea::-webkit-scrollbar-thumb:hover {
-  background: #c5c6cf;
-}
-
-.overflow-y-auto::-webkit-scrollbar {
-  width: 6px;
-}
-.overflow-y-auto::-webkit-scrollbar-track {
-  background: transparent;
-}
+textarea::-webkit-scrollbar-track,
+.overflow-y-auto::-webkit-scrollbar-track { background: transparent; }
+textarea::-webkit-scrollbar-thumb,
 .overflow-y-auto::-webkit-scrollbar-thumb {
   background: #c5c6cf;
   border-radius: 4px;
 }
-.overflow-y-auto::-webkit-scrollbar-thumb:hover {
-  background: #75777f;
-}
+textarea::-webkit-scrollbar-thumb:hover,
+.overflow-y-auto::-webkit-scrollbar-thumb:hover { background: #75777f; }
+
+html.dark textarea::-webkit-scrollbar-thumb,
+html.dark .overflow-y-auto::-webkit-scrollbar-thumb { background: #475569; }
+html.dark textarea::-webkit-scrollbar-thumb:hover,
+html.dark .overflow-y-auto::-webkit-scrollbar-thumb:hover { background: #64748b; }
